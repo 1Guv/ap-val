@@ -1,0 +1,49 @@
+To do list:
+
+1 - Sort out Bootstrap - need to add links in styles.css then test
+2 - Style the main page
+3 - Write the questions down and weighting for each
+4 - Add Paypal for payment later - good for testing with ITG
+5 - Add google fonts
+6 - Reset styles to base styles in styles.css
+7 - MOBILE first design so fully responsive for tablet and desktop
+8 - keep speed in mind
+9 - show price increasing and decreasing etc
+10 - choose appropriate salutation
+11 - add outline to the form style
+12 - display the plate on the right hand in each question with increase and decrease?
+13 - some questions maybe better as radio buttons, so when on mobile its 1 click wicle you see all the options at the same time
+
+
+Questions:
+// Enter plate
+// Check for 'Current', 'Prefix', 'Suffix', 'Dateless'
+// Check for length - give that weighting
+// Calculate and display base price
+// Q1: Please state the exact number plate with the correct spacing?
+// Q2: Please state the plate in ENGLISH, PUNJABI, HINDI or PAKISTANI words with spaces?
+// Q3: Does the reg have the EXACT, MORE or LESS characters than the actual word that it represents?
+// Q4: Does the registration have duplicate sequential letters or numbers? (yes or no)"
+// Q5: Please state if the plate is a good match to the words above?
+
+    Radio select for the below
+    "1: Not sure if its a good match or not!"
+    "2: Not really - (a number or letter will need modifying to look like another number or letter)"
+    "3: Kind of - (most leters match the word but may not be in the correct position)"
+    "4: Good Match - (all numbers represent the correct character and are in the correct position)"
+    "5: Exact Match - (two words with no modifications)"
+    "6: Exact Match - (single word with no modifications)"
+
+// Q6: What are the total amount of characters in the plate?"
+// Q7: How many digits? - can i work this out using a function?
+// Q8: How many letters?" - can i work this out using a function?
+
+// Q9: Do any of the #{@letters} letters need to be modified?
+   eg: do any of the letters need to look like a different letter
+
+// 10: Do any of the #{@digits} numbers need to be modified?
+   eg do any of the numbers need to look like a different number
+
+// 12: What year was it issued - provide reg years?
+   puts "click here to check (http://www.apnaplates.com/aboutcrd/APNAPLATES-CAR-REGISTRATION-DATES)"
+   This will show the the age of the plate?
