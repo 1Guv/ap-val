@@ -133,15 +133,22 @@
             <form [formGroup]="fifthFormGroup">
             <ng-template matStepLabel>Plate match options</ng-template>
             <div class="d-flex flex-column">
-                <mat-label>Please state if the plate is a good match to the words below?</mat-label>
-                <mat-form-field appearance="outline">
+                <mat-label>Please state if the plate is a good match to the options below?</mat-label>
+                <!-- <mat-form-field appearance="outline">
                     <mat-label>Plate match options</mat-label>
-                    <mat-select formControlName="s5q1">
-                        <mat-option *ngFor="let option of plateMatchOptions" [value]="option.value">{{ option.type }}
-                                <span class="hint">{{ option.hint }}</span>
+                    <mat-select formControlName="s5q1" style="display: block;">
+                        <mat-option style="display: block;" *ngFor="let option of plateMatchOptions" [value]="option.value">{{ option.type }}
+                                <span style="display: block; font-size: 11px; margin-top: -28px">{{ option.hint }}</span>
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
+
+                <mat-radio-group class="d-flex flex-column my-2">
+                    <mat-radio-button class="m-1 text-left" *ngFor="let option of plateMatchOptions" [value]="option.value">
+                        {{ option.type }}
+                        <span class="hint">{{ option.hint }}</span>
+                    </mat-radio-button>
+                </mat-radio-group>
             </div>
             <div class="float-right">
                 <button mat-button matStepperPrevious>Back</button>
