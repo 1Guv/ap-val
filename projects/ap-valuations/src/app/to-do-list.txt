@@ -13,6 +13,7 @@ To do list:
 11 - add outline to the form style
 12 - display the plate on the right hand in each question with increase and decrease?
 13 - some questions maybe better as radio buttons, so when on mobile its 1 click wicle you see all the options at the same time
+14 - some interfaces need to be instances of each other
 
 
 Questions:

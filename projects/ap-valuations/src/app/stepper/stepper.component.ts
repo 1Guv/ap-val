@@ -2,58 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MatOptionSelectionChange} from '@angular/material';
 import { utf8Encode } from '@angular/compiler/src/util';
+import { Valuation } from '../classes/classes';
+import {
+  PlateType,
+  PlateMeaning,
+  PlateCharType,
+  PlateMatchOptions,
+  PlateTotalChar,
+  PlateTotalNumbers,
+  PlateTotalLetters,
+  PlateLetterModifications,
+  PlateNumberModifications,
+  SuffixNumberPlates,
+} from '../interfaces/interfaces';
 
-export interface PlateType {
-  value: number;
-  type: string;
-}
-
-export interface PlateMeaning {
-  value: number;
-  type: string;
-}
-
-export interface PlateCharType {
-  value: number;
-  type: string;
-  percentage: number;
-}
-
-export interface PlateMatchOptions {
-  value: number;
-  type: string;
-  hint: string;
-  percentage: number;
-}
-
-export class Valuation {
-  plateTypeValue: number;
-  plateMeaningValue: number;
-  plateCharacterValue: number;
-  plateDuplicateValue: number;
-  plateMatchValue: number;
-  plateTotalCharValue: number;
-  plateTotalNumbersValue: number;
-  plateTotalLettersValue: number;
-  plateMod1Value: number;
-  plateMod2Value: number;
-  plateYearValue: number;
-  total: number;
-    constructor() {
-          this.plateTypeValue = 0;
-          this.plateMeaningValue = 0;
-          this.plateCharacterValue = 0;
-          this.plateDuplicateValue = 0;
-          this.plateMatchValue = 0;
-          this.plateTotalCharValue = 0;
-          this.plateTotalNumbersValue = 0;
-          this.plateTotalLettersValue = 0;
-          this.plateMod1Value = 0;
-          this.plateMod2Value = 0;
-          this.plateYearValue = 0;
-          this.total = 0;
-      }
-    }
 
 @Component({
   selector: 'app-stepper',
@@ -62,7 +24,6 @@ export class Valuation {
 })
 export class StepperComponent implements OnInit {
 
-  valuationTotal = 0;
   valuation: Valuation;
 
   s1q1FullName: string;
@@ -117,23 +78,88 @@ export class StepperComponent implements OnInit {
     },
     {
       value: 2000,
-      type: '4: Good Match',
+      type: '4: Good match',
       hint: 'all numbers represent the correct character and are in the correct position',
       percentage: 20
     },
     {
       value: 4000,
-      type: '5: Exact Match',
+      type: '5: Very good match',
+      hint: 'numbers look like the actual letter eg 6=G, not 19=A',
+      percentage: 25
+    },
+    {
+      value: 6000,
+      type: '5: Exact match',
       hint: 'two words with no modifications',
       percentage: 25
     },
     {
       value: 20000,
-      type: '6: Perfect Exact Match',
+      type: '6: Perfect exact match',
       hint: 'single word with no modifications',
       percentage: 50
     },
   ];
+
+  plateTotalChar: PlateTotalChar[] = [
+    {value: 20000, type: '2', percentage: 75},
+    {value: 10000, type: '3', percentage: 50},
+    {value: 5000, type: '4', percentage: 10},
+    {value: 1000, type: '5', percentage: 5},
+    {value: 800, type: '6', percentage: 3},
+    {value: 500, type: '7', percentage: 1},
+  ];
+
+  plateTotalNumbers: PlateTotalNumbers[] = [
+    {value: 5000, type: '1', percentage: 50},
+    {value: 1000, type: '2', percentage: 10},
+    {value: 500, type: '3', percentage: 1},
+  ];
+
+  plateTotalLetters: PlateTotalLetters[] = [
+    {value: 10000, type: '1', percentage: 50},
+    {value: 5000, type: '2', percentage: 10},
+    {value: 2000, type: '3', percentage: 1},
+    {value: 500, type: '4', percentage: 1},
+    {value: 100, type: '5', percentage: 1},
+  ];
+
+  plateLetterModifications: PlateLetterModifications[] = [
+    {value: -4000, type: 'Yes', percentage: -50, hint: 'Need to add'},
+    {value: 1000, type: 'No', percentage: 10, hint: 'Need to add'},
+  ];
+
+  plateNumberModifications: PlateNumberModifications[] = [
+    {value: -2000, type: 'Yes', percentage: -50, hint: 'Need to add'},
+    {value: 1000, type: 'No', percentage: 10, hint: 'Need to add'},
+  ];
+
+  suffixNumberPlates: SuffixNumberPlates[] = [
+    { letter: 'A', value: 1, from: '1 Feb 1963', to: '31 Dec 1963', year: 1963 },
+    { letter: 'B', value: 1, from: '1 Feb 1964', to: '31 Dec 1964', year: 1964 },
+    { letter: 'C', value: 1, from: '1 Feb 1965', to: '31 Dec 1965', year: 1965 },
+    { letter: 'D', value: 1, from: '1 Feb 1966', to: '31 Dec 1966', year: 1966 },
+    { letter: 'E', value: 1, from: '1 Feb 1967', to: '31 Dec 1967', year: 1967 },
+    { letter: 'F', value: 1, from: '1 Feb 1968', to: '31 Dec 1968', year: 1968 },
+    { letter: 'G', value: 1, from: '1 Feb 1968', to: '31 Dec 1969', year: 1969 },
+    { letter: 'H', value: 1, from: '1 Feb 1969', to: '31 Dec 1970', year: 1970 },
+    { letter: 'J', value: 1, from: '1 Feb 1970', to: '31 Dec 1971', year: 1971 },
+    { letter: 'K', value: 1, from: '1 Feb 1971', to: '31 Dec 1972', year: 1972 },
+    { letter: 'L', value: 1, from: '1 Feb 1972', to: '31 Dec 1973', year: 1973 },
+    { letter: 'M', value: 1, from: '1 Feb 1973', to: '31 Dec 1974', year: 1974 },
+    { letter: 'N', value: 1, from: '1 Feb 1974', to: '31 Dec 1975', year: 1975 },
+    { letter: 'P', value: 1, from: '1 Feb 1975', to: '31 Dec 1976', year: 1976 },
+    { letter: 'R', value: 1, from: '1 Feb 1976', to: '31 Dec 1977', year: 1977 },
+    { letter: 'S', value: 1, from: '1 Feb 1977', to: '31 Dec 1978', year: 1978 },
+    { letter: 'T', value: 1, from: '1 Feb 1978', to: '31 Dec 1979', year: 1979 },
+    { letter: 'V', value: 1, from: '1 Feb 1979', to: '31 Dec 1980', year: 1980 },
+    { letter: 'W', value: 1, from: '1 Feb 1980', to: '31 Dec 1981', year: 1981 },
+    { letter: 'X', value: 1, from: '1 Aug 1981', to: '31 July 1982', year: 1982 },
+    { letter: 'Y', value: 1, from: '1 Aug 1982', to: '31 July 1983', year: 1983 },
+  ];
+
+  duplicateSequentialLetters = false;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -201,6 +227,51 @@ export class StepperComponent implements OnInit {
       this.valuation.plateTotalCharValue = value;
       this.calcValuationTotal();
     }
+  }
+
+  plateDupSeqLetters() {
+    if (this.duplicateSequentialLetters) {
+      this.valuation.plateDuplicateValue = -3000;
+    } else {
+      this.valuation.plateDuplicateValue = 0;
+    }
+    this.calcValuationTotal();
+  }
+
+  plateMatchCalc(value: number) {
+    this.valuation.plateMatchValue = value;
+    this.calcValuationTotal();
+  }
+
+  plateTotalCharCalc(event: MatOptionSelectionChange, value: number) {
+    if (event.source.selected) {
+      this.valuation.plateTotalCharValue = value;
+      this.calcValuationTotal();
+    }
+  }
+
+  plateTotalNumbersCalc(event: MatOptionSelectionChange, value: number) {
+    if (event.source.selected) {
+      this.valuation.plateTotalNumbersValue = value;
+      this.calcValuationTotal();
+    }
+  }
+
+  plateTotalLettersCalc(event: MatOptionSelectionChange, value: number) {
+    if (event.source.selected) {
+      this.valuation.plateTotalLettersValue = value;
+      this.calcValuationTotal();
+    }
+  }
+
+  letterModCalc(value: number) {
+    this.valuation.plateMod1Value = value;
+    this.calcValuationTotal();
+  }
+
+  numberModCalc(value: number) {
+    this.valuation.plateMod2Value = value;
+    this.calcValuationTotal();
   }
 
   calcValuationTotal() {

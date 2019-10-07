@@ -35,8 +35,6 @@
                            required>
                     <mat-icon matSuffix>mail</mat-icon>
                 </mat-form-field>
-                <pre>{{ s1q1FullName | json }}</pre>
-                <pre>{{ s1q2Email | json }}</pre>
             </div>
             
             <div class="float-right">
@@ -119,7 +117,11 @@
                 <!-- <mat-label>Does the registration have duplicate sequential letters or numbers? (yes or no)</mat-label> -->
                 <div class="mt-5 p-2 border">
                     <h6>Does the registration have duplicate sequential letters or numbers?</h6>
-                    <mat-slide-toggle formControlName="s4q3"></mat-slide-toggle>
+                    <mat-slide-toggle formControlName="s4q3" 
+                    [checked]="duplicateSequentialLetters === true ? true : false"
+                    (change)="plateDupSeqLetters()"
+                    [(ngModel)]="duplicateSequentialLetters">
+                </mat-slide-toggle>
                 </div>
             </div>
             <div class="float-right">
@@ -133,7 +135,7 @@
             <form [formGroup]="fifthFormGroup">
             <ng-template matStepLabel>Plate match options</ng-template>
             <div class="d-flex flex-column">
-                <mat-label>Please state if the plate is a good match to the options below?</mat-label>
+                <mat-label class="text-left">Please state if the plate is a match to the options below?</mat-label>
                 <!-- <mat-form-field appearance="outline">
                     <mat-label>Plate match options</mat-label>
                     <mat-select formControlName="s5q1" style="display: block;">
@@ -144,9 +146,18 @@
                 </mat-form-field> -->
 
                 <mat-radio-group class="d-flex flex-column my-2">
-                    <mat-radio-button class="m-1 text-left" *ngFor="let option of plateMatchOptions" [value]="option.value">
+                    <mat-radio-button class="m-1 text-left" 
+                                      *ngFor="let option of plateMatchOptions"
+                                      (click)="plateMatchCalc(option.value)"
+                                      [value]="option.value">
                         {{ option.type }}
-                        <span class="hint">{{ option.hint }}</span>
+                        <!-- <span class="hint">{{ option.hint }}</span> -->
+                        <button mat-button
+                                class="ml-2"
+                                matTooltip="{{ option.hint }}"
+                                matTooltipPosition="above">
+                                <mat-icon>info</mat-icon>
+                        </button>
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
@@ -161,18 +172,37 @@
             <form [formGroup]="sixthFormGroup">
             <ng-template matStepLabel>Plate characters</ng-template>
             <div class="d-flex flex-column">
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="Total characters" formControlName="s6q1" required>
-                    <mat-icon matSuffix>directions_car</mat-icon>
+
+                <mat-form-field class="m-2" appearance="outline">                
+                <mat-label>Total characters?</mat-label>
+                <mat-select formControlName="s6q1">
+                    <mat-option *ngFor="let totalChar of plateTotalChar"
+                    (onSelectionChange)="plateTotalCharCalc($event, totalChar.value)"
+                    [value]="totalChar.value">{{ totalChar.type }}</mat-option>
+                </mat-select>
+                <mat-hint>What is the total amount of characters in the plate including numbers and letters?</mat-hint>
                 </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="How many numbers in your plate" formControlName="s6q2" required>
-                    <mat-icon matSuffix>directions_car</mat-icon>
+
+                <mat-form-field class="m-2" appearance="outline">                
+                <mat-label>How many numbers in your plate?</mat-label>
+                <mat-select formControlName="s6q2">
+                    <mat-option *ngFor="let totalNumbers of plateTotalNumbers"
+                    (onSelectionChange)="plateTotalNumbersCalc($event, totalNumbers.value)"
+                    [value]="totalNumbers.value">{{ totalNumbers.type }}</mat-option>
+                </mat-select>
+                <mat-hint>What is the total amount of numbers in the plate?</mat-hint>
                 </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="How many letters in your plate" formControlName="s6q3" required>
-                    <mat-icon matSuffix>directions_car</mat-icon>
+
+                <mat-form-field class="m-2" appearance="outline">                
+                <mat-label>How many letters in your plate?</mat-label>
+                <mat-select formControlName="s6q3">
+                    <mat-option *ngFor="let totalLetters of plateTotalLetters"
+                    (onSelectionChange)="plateTotalLettersCalc($event, totalLetters.value)"
+                    [value]="totalLetters.value">{{ totalLetters.type }}</mat-option>
+                </mat-select>
+                <mat-hint>What is the total amount of letters in the plate?</mat-hint>
                 </mat-form-field>
+
             </div>
             <div class="float-right">
                 <button mat-button matStepperPrevious>Back</button>
@@ -184,7 +214,7 @@
         <mat-step [stepControl]="seventhFormGroup">
             <form [formGroup]="seventhFormGroup">
             <ng-template matStepLabel>Modifications</ng-template>
-            <div class="d-flex flex-column">
+            <!-- <div class="d-flex flex-column">
                 <mat-form-field appearance="outline">
                     <input matInput placeholder="Do any of the plate letter characters need to be modified?" formControlName="s7q1" required>
                     <mat-icon matSuffix>directions_car</mat-icon>
@@ -195,7 +225,40 @@
                     <mat-icon matSuffix>directions_car</mat-icon>
                     <mat-hint>Do any of the numbers need to look like a different number</mat-hint>
                 </mat-form-field>
-            </div>
+            </div> -->
+
+            <mat-label class="text-left">Do any of the plate letter characters need to be modified?</mat-label>
+            <mat-radio-group class="d-flex flex-column my-2">
+                <mat-radio-button class="m-1 text-left" 
+                                    *ngFor="let letterMod of plateLetterModifications"
+                                    (click)="letterModCalc(letterMod.value)"
+                                    [value]="letterMod.value">
+                    {{ letterMod.type }}
+                    <button mat-button
+                            class="ml-2"
+                            matTooltip="{{ letterMod.hint }}"
+                            matTooltipPosition="above">
+                            <mat-icon>info</mat-icon>
+                    </button>
+                </mat-radio-button>
+            </mat-radio-group>
+
+            <mat-label class="text-left">Do any of the plate number characters need to be modified?</mat-label>
+            <mat-radio-group class="d-flex flex-column my-2">
+                <mat-radio-button class="m-1 text-left" 
+                                    *ngFor="let numberMod of plateNumberModifications"
+                                    (click)="numberModCalc(numberMod.value)"
+                                    [value]="numberMod.value">
+                    {{ numberMod.type }}
+                    <button mat-button
+                            class="ml-2"
+                            matTooltip="{{ numberMod.hint }}"
+                            matTooltipPosition="above">
+                            <mat-icon>info</mat-icon>
+                    </button>
+                </mat-radio-button>
+            </mat-radio-group>
+
             <div class="float-right">
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
