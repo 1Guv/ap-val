@@ -57,7 +57,30 @@
                                required>
                         <mat-icon matSuffix>directions_car</mat-icon>
                     </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Price bought</mat-label>
+                        <input matInput
+                               placeholder="Price bought"
+                               formControlName="s2q2"
+                               [(ngModel)]="s2q2PriceBought" 
+                               required>
+                        <mat-icon matSuffix>comment</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Date bought</mat-label>
+                        <input matInput
+                               [matDatepicker]="picker"
+                               placeholder="Date bought"
+                               formControlName="s2q3"
+                               [(ngModel)]="s2q3DateBought"
+                               required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                    </mat-form-field>
                 </div>
+
                 <div class="float-right">
                     <button mat-button matStepperPrevious>Back</button>
                     <button mat-button matStepperNext>Next</button>
@@ -76,12 +99,26 @@
                     <mat-select formControlName="s3q1">
                         <mat-option *ngFor="let plate of plateTypes" 
                             [value]="plate.value" 
-                            (onSelectionChange)="plateTypesCalc($event, plate.value)">
+                            (onSelectionChange)="plateTypesCalc($event, plate.value, plate.type)">
                             {{ plate.type }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+
+            <div *ngIf="plateFormatTypes.current" class="d-flex flex-column">
+                <mat-form-field appearance="outline">
+                    <mat-label>Current style</mat-label>
+                    <mat-select formControlName="s3q2">
+                        <mat-option *ngFor="let currentPlate of currentStyleNumberPlates" 
+                            [value]="currentPlate.value" 
+                            (onSelectionChange)="currentStyleCalc($event, currentPlate.value, currentPlate.number)">
+                            {{ currentPlate.number }} - {{ currentPlate.year }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
             <div class="float-right">
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
@@ -266,7 +303,7 @@
             </form>
         </mat-step>
     
-        <mat-step [stepControl]="eighthFormGroup">
+        <!-- <mat-step [stepControl]="eighthFormGroup">
             <form [formGroup]="eighthFormGroup">
             <ng-template matStepLabel>Issued year</ng-template>
             <div class="d-flex flex-column">
@@ -282,7 +319,7 @@
                 <button mat-button matStepperNext>Next</button>
             </div>
             </form>
-        </mat-step>
+        </mat-step> -->
     
         <mat-step>
             <ng-template matStepLabel>Done</ng-template>

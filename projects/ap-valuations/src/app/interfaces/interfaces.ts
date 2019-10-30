@@ -1,18 +1,18 @@
 export interface PlateType {
     value: number;
     type: string;
-  }
+}
 
 export interface PlateMeaning {
-value: number;
-type: string;
+    value: number;
+    type: string;
 }
 
 export interface PlateCharType {
     value: number;
     type: string;
     percentage: number;
-  }
+}
 
 export interface PlateMatchOptions {
     value: number;
@@ -70,9 +70,9 @@ export class PrefixNumberPlates {
   }
 
 export class CurrentStyleNumberPlates {
-    letter: string;
+    number: string;
     value: number;
     from: string;
     to: string;
-    year: number;
+    year: string;
   }

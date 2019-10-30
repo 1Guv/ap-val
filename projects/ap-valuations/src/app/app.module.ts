@@ -8,11 +8,10 @@ import { AppMaterialModule } from './app-material/app-material.module';
 import { StepperComponent } from './stepper/stepper.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     AppComponent,
-    StepperComponent
+    StepperComponent,
   ],
   imports: [
     BrowserModule,
