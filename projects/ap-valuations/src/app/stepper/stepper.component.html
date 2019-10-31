@@ -8,7 +8,7 @@
             <span class="number-plate">{{ s2q1UserNumberPlate | uppercase }}</span>
             <span> = £{{ this.valuation.total }}</span>
         </div>
-</div>
+    </div>
     
     <mat-vertical-stepper [linear]="isLinear" #stepper>
         <mat-step [stepControl]="firstFormGroup">
@@ -321,9 +321,15 @@
             </form>
         </mat-step> -->
     
-        <mat-step>
+        <mat-step class="mb-5">
             <ng-template matStepLabel>Done</ng-template>
-            You are now done.
+            <div class="number-plate-container">
+                <div *ngIf="s2q1UserNumberPlate" class="m-3">
+                    <span class="number-plate">{{ s2q1UserNumberPlate | uppercase }}</span>
+                    <span> = £{{ this.valuation.total }}</span>
+                </div>
+            </div>
+            <button mat-button (click)="stepper.save()">Save</button>
             <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button (click)="stepper.reset()">Reset</button>
